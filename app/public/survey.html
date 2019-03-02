@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Find Friend</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Convergence|Roboto|Ropa+Sans" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="jumbotron pb-5">
+                    <h1 class="display-4 font-weight-bold" style="font-family: 'Convergence', sans-serif"><i
+                            class="fas fa-user-friends pl-2 pr-3"></i>Friend Finder
+                    </h1>
+                    <hr class="my-4">
+                    <h4 class="text-secondary" style="font-family: 'Roboto', sans-serif">Please answer the following
+                        questions.</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col">
+                <div id="info" class="card">
+                    <div class="card-body">
+                            <h2 class="card-title" style="font-family: 'Convergence', sans-serif"><i
+                                class="fas fa-robot pr-2"></i>About You</h2>
+                        <form>
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email address</label>
+                                <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="photo">Photo (Please upload a image with size smaller than 50kb)</label>
+                                <input id="input" type="file" accept="image/*" onchange="readURL(this);"
+                                 class="form-control pt-3 pb-5" />
+                                <img id="preview" class="img-thumbnail mt-3" style="max-width: 200px"
+                                    src="http://placehold.it/200" alt="" class=""></img>
+                            </div>
+                        </form>
+                        <button id="surveyintro" type="button" class="btn btn-info btn-lg btn-block">Submit & Start Matching</button>
+                    </div>
+                </div>
+
+                <div id="test" class="card" style="display: none">
+                    <div class="card-body">
+                        <h2 id="index" class="card-title" style="font-family: 'Convergence', sans-serif"><i
+                                class="fas fa-robot pr-2"></i>Question 1</h2>
+                        <form class="mt-5 mb-5 text-center">
+                            <img id="img"
+                                src="http://www.personalitytutor.com/files/2012/04/How-To-Introduce-People.jpg"
+                                class="img-thumbnail mb-5" style="max-width: 360px;">
+                            <h3 id="question" class="mb-5" style="font-family: 'Roboto', sans-serif">
+                                You find it difficult to introduce yourself to other people.
+                            </h3>
+                            <div id="checkboxContainer">
+                                <div class="form-check form-check-inline mr-5">
+                                    <label class="form-check-label font-weight-bold mr-5"
+                                        for="inlineRadio1">AGREE</label>
+                                    <input class="form-check-input" style="transform: scale(2)" type="radio"
+                                        name="inlineRadioOptions" id="op1" value="1">
+                                </div>
+                                <div class="form-check form-check-inline mr-5">
+                                    <input class="form-check-input" style="transform: scale(1.5)" type="radio"
+                                        name="inlineRadioOptions" id="op2" value="2">
+                                </div>
+                                <div class="form-check form-check-inline mr-5">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="op3"
+                                        value="3">
+                                </div>
+                                <div class="form-check form-check-inline mr-5">
+                                    <input class="form-check-input" style="transform: scale(1.5)" type="radio"
+                                        name="inlineRadioOptions" id="op4" value="4">
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input mr-5" style="transform: scale(2)" type="radio"
+                                        name="inlineRadioOptions" id="op5" value="5">
+                                    <label class="form-check-label font-weight-bold" for="inlineRadio1">DISAGREE</label>
+                                </div>
+                            </div>
+
+                        </form>
+                        <button id="next" type="button" class="btn btn-info btn-lg btn-block">NEXT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class = "mb-5">
+            <a href="/api/friends">API Friends List </a>|<a href="https://github.com/muzlee1113/friendFinder"> GitHub Repo</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        var newFriend = {};
+
+        var testArr = [
+            {
+                question: "You find it difficult to introduce yourself to other people.",
+                img: "http://www.personalitytutor.com/files/2012/04/How-To-Introduce-People.jpg"
+            },
+            {
+                question: "You have always been interested in unconventional and ambiguous things, e.g. in books, art, or movies.",
+                img: "https://cdn-images-1.medium.com/max/1024/1*G2RC8w1NIUL1qK0sFVie3g.png"
+            },
+            {
+                question: "You are often envious of others.",
+                img: "https://fee.org/media/31374/envy.jpg?center=0.32,0.5083333333333333&mode=crop&width=1920&rnd=131884958300000000"
+            },
+            {
+                question: "You consider yourself more practical than creative.",
+                img: "https://tedideas.files.wordpress.com/2013/10/creativeconfidence1.png?w=750"
+            },
+            {
+                question: "Being able to develop a plan and stick to it is the most important part of every project.",
+                img: "https://wordpress.mediatel.co.uk/wp-content/uploads/2018/10/media-plan.jpg"
+            },
+            {
+                question: "Winning a debate matters less to you than making sure no one gets upset.",
+                img: "https://1.bp.blogspot.com/-3x9Ye7zvA8s/VdtAserDIFI/AAAAAAAACnw/8YXiZmkwtmo/s1600/old-couple-quarrel.jpg"
+            },
+            {
+                question: "You have a tendency to procrastinate until there is not enough time to do everything.",
+                img: "https://waitbutwhy.com/wp-content/uploads/2013/10/FEATURE6.png"
+            },
+            {
+                question: "An interesting book or a video game is often better than a social event.",
+                img: "http://music-by.com/wp-content/uploads/2018/09/Social-Event.jpg"
+            },
+            {
+                question: "If the room is full, you stay closer to the walls, avoiding the center.",
+                img: "http://img.bimg.126.net/photo/YD6bnwfJqyJfwLHauqJcbA==/4807029652265384952.jpg"
+            },
+            {
+                question: "If someone does not respond to your e-mail quickly, you start worrying if you said something wrong.",
+                img: "https://static.makeuseof.com/wp-content/uploads/2011/12/Email-670x335.jpg"
+            },
+
+        ]
+
+        var count = 0;
+        var imgUrl;
+        // grab the html of all the checkbox when none of them is active and regard it as default
+        var content = $("#checkboxContainer").html()
+        //======================== click handlers ========================
+
+        $("#surveyintro").on("click", function () {
+            newFriend = {
+                "email": $("#email").val().trim(),
+                "name": $("#name").val().trim(),
+                "photo": imgUrl,
+                "scores": []
+            }
+            console.log(newFriend)
+            $("#info").hide()
+            $("#test").show()
+
+        })
+
+        $("#next").on("click", function () {
+            count++
+            if (count < testArr.length) {
+                // push the score to the scores arr
+                let score = $("input:checked").val()
+                score = parseInt(score)
+                console.log(score)
+                newFriend.scores.push(score)
+                console.log(newFriend)
+                // move to the next question
+                var index = count + 1
+                console.log(index)
+                // change the question index
+                $("#index").html('<i class="fas fa-robot pr-2"></i>Question ' + index)
+                // change question
+                $("#question").text(testArr[count].question)
+                // change img
+                $("#img").attr('src', testArr[count].img)
+                // change the checked checkbox back to default
+                $("#checkboxContainer").empty()
+                $("#checkboxContainer").html(content)
+            } else {
+                // push the score to the scores arr
+                let score = $("input:checked").val()
+                console.log(score)
+                newFriend.scores.push(parseInt(score))
+                console.log(newFriend)
+                //end and show result
+                console.log("end")
+                console.log(newFriend)
+                $.post("/api/friends", newFriend).then(function (data) {
+                    console.log(data)
+                    result(data)
+                })
+            }
+        })
+
+        function clickInput() {
+            $('#input').click();
+        }
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    console.log("image uploading")
+                    $('#preview').attr('src', e.target.result);
+                    imgUrl = e.target.result
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function result(data) {
+            $("#test").empty()
+            $("#test").html(
+                `<div class="card-body">
+                    <div class ="row text-center">
+                        <div class = "col">
+                            <h2 id="index" class="card-title mb-5" style="font-family: 'Convergence', sans-serif"><i
+                            class="fas fa-robot pr-3"></i>Here is your soul mate!! </h2>
+                        </div>
+                    </div>
+                    <div class = 'row'>
+                        <div class="col ml-auto text-center">
+                            <div class = "text-center">
+                                <h3 class = "font-weight-bold mb-4" style="font-family: 'Roboto', sans-serif">Compatibility `+ data.compatibility +`%</h3>
+                                <img class = "mb-5" style="max-width: 360px;" src = '`+ data.match.photo + `'>
+                            </div>
+                            <h3 style="font-family: 'Roboto', sans-serif">Name : `+ data.match.name + `</h3>
+                            <h3 style="font-family: 'Roboto', sans-serif">Email: `+ data.match.email + `</h3>
+                        </div>
+                    </div>
+                </div>`
+            )
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
