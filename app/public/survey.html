@@ -108,6 +108,8 @@
                         <button id="next" type="button" class="btn btn-info btn-lg btn-block">NEXT</button>
                     </div>
                 </div>
+                <button id="restart" type="button" class="btn btn-lg btn-info btn-secondary"
+                    style="display:none">Restart</button>
             </div>
         </div>
         <div class="mb-5">
@@ -132,15 +134,16 @@
                     <h5 id="resultEmail" style="font-family: 'Roboto', sans-serif"></h5>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
     <script type="text/javascript">
-
+        //======================== set up ========================
+        // Global variable
         var newFriend = {};
-
+        // Friends array
         var testArr = [
             {
                 question: "You find it difficult to introduce yourself to other people.",
@@ -185,12 +188,13 @@
 
         ]
 
+        //======================== click handlers ========================
         var count = 0;
         var imgUrl;
         // grab the html of all the checkbox when none of them is active and regard it as default
         var content = $("#checkboxContainer").html()
-        //======================== click handlers ========================
 
+        // start the survey
         $("#surveyintro").on("click", function () {
             newFriend = {
                 "email": $("#email").val().trim(),
@@ -198,49 +202,77 @@
                 "photo": imgUrl,
                 "scores": []
             }
-            console.log(newFriend)
-            $("#info").hide()
-            $("#test").show()
-
-        })
-
-        $("#next").on("click", function () {
-            count++
-            if (count < testArr.length) {
-                // push the score to the scores arr
-                let score = $("input:checked").val()
-                score = parseInt(score)
-                console.log(score)
-                newFriend.scores.push(score)
+            if(newFriend.email===""||newFriend.name===""||newFriend.photo===""){
+                alert("Please finish the form")
+            }else{
                 console.log(newFriend)
-                // move to the next question
-                var index = count + 1
-                console.log(index)
-                // change the question index
-                $("#index").html('<i class="fas fa-robot pr-2"></i>Question ' + index)
-                // change question
-                $("#question").text(testArr[count].question)
-                // change img
-                $("#img").attr('src', testArr[count].img)
-                // change the checked checkbox back to default
-                $("#checkboxContainer").empty()
-                $("#checkboxContainer").html(content)
-            } else {
-                // push the score to the scores arr
-                let score = $("input:checked").val()
-                console.log(score)
-                newFriend.scores.push(parseInt(score))
-                console.log(newFriend)
-                //end and show result
-                console.log("end")
-                console.log(newFriend)
-                $.post("/api/friends", newFriend).then(function (data) {
-                    console.log(data)
-                    result(data)
-                })
+                $("#info").hide()
+                $("#test").show()
             }
         })
 
+        // display next question and save score
+        $("#next").on("click", function () {
+            count++
+            // end game if
+            // if the questions do not run out, keep go to the next question
+            if (count < testArr.length) {
+                // push the score to the scores arr
+                let score = $("input:checked").val()
+                if(!score){
+                    alert("Please Choose One!!")
+                }else{
+                    score = parseInt(score)
+                    console.log(score)
+                    newFriend.scores.push(score)
+                    console.log(newFriend)
+                    // move to the next question
+                    var index = count + 1
+                    console.log(index)
+                    // change the question index
+                    $("#index").html('<i class="fas fa-robot pr-2"></i>Question ' + index)
+                    // change question
+                    $("#question").text(testArr[count].question)
+                    // change img
+                    $("#img").attr('src', testArr[count].img)
+                    // change the checked checkbox back to default
+                    $("#checkboxContainer").empty()
+                    $("#checkboxContainer").html(content)
+                }
+            // if it's the last question, end the game and post the new friend data
+            } else {
+                if(!score){
+                    alert("Please Choose One!!")
+                }else{
+                    // push the score to the scores arr
+                    let score = $("input:checked").val()
+                    console.log(score)
+                    newFriend.scores.push(parseInt(score))
+                    console.log(newFriend)
+                    console.log("end")
+                    console.log(newFriend)
+                    // post request
+                    $.post("/api/friends", newFriend).then(function (data) {
+                        console.log(data)
+                        //end and show result in modal
+                        result(data)
+                    })
+                }
+            }
+        })
+
+        //close modal
+        $("#close").on("click", function () {
+            $("#test").hide()
+            $("#restart").show()
+        })
+
+        //reload the page and start from top
+        $("#restart").on("click", function () {
+            location.reload()
+        })
+
+        //======================== Picture reader ========================
         function clickInput() {
             $('#input').click();
         }
@@ -251,15 +283,18 @@
 
                 reader.onload = function (e) {
                     console.log("image uploading")
+                    // display pic on screen
                     $('#preview').attr('src', e.target.result);
+                    // save image data in global variable and save that to new friend object later
                     imgUrl = e.target.result
                 };
-
+                
                 reader.readAsDataURL(input.files[0]);
             }
         }
 
-        function result(data) { 
+        //======================== Modal display at the end ========================
+        function result(data) {
             console.log("Modal RUN!!!!")
             $("#resultPhoto").attr('src', data.match.photo)
             $("#resultName").text(data.match.name)

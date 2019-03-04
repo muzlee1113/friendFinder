@@ -106,7 +106,7 @@ var friendsArr = [
     {
         "email": "lrlrlr@hotmail.com",
         "name": "Lou Ritter",
-        "photo": "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAkDAAAAJDhhZTI5NTk2LWQzZjUtNDJjZi1hMTM2LTQ3ZjNmYjE0YmY2NA.jpg",
+        "photo": "https://object.cato.org/sites/cato.org/files/authors/davidbier_1.jpg",
         "scores": [
             4,
             3,

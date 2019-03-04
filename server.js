@@ -24,7 +24,6 @@ router.route('/survey').get(htmlRoutes.getSurvey);
 router.route('/api/friends').get(apiRoutes.getFriends);
 router.route('/api/friends').post(apiRoutes.postFriends);
 
-
 app.use('/', router);
 // app.use('/api', router);
 
