@@ -16,8 +16,8 @@ app.use(express.json());
 // ===========================Routes==================================
 
 
-var htmlRoutes = require("./routing/htmlRoutes");
-var apiRoutes = require("./routing/apiRoutes");
+var htmlRoutes = require("./app/routing/htmlRoutes");
+var apiRoutes = require("./app/routing/apiRoutes");
 
 router.route('/').get(htmlRoutes.getHome);
 router.route('/survey').get(htmlRoutes.getSurvey);
