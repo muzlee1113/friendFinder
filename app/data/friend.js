@@ -123,7 +123,7 @@ var friendsArr = [
     {
         "email": "jbisthebest@gmail.com",
         "name": "Jordan Biason",
-        "photo": "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAisAAAAJGUxYzc4YzA0LWQxMzUtNGI4NS04YTFiLTkwYzM0YTZkNzA2NA.jpg",
+        "photo": "https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE5NTU2MzE2MjY3OTA2NTcx/michael-jordan-9358066-1-402.jpg",
         "scores": [
             4,
             4,

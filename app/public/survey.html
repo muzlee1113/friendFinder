@@ -6,14 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Find Friend</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Convergence|Roboto|Ropa+Sans" rel="stylesheet">
-   
+    <!-- JQuery -->
     <script src="https://code.jquery.com/jquery.js"></script>
-
+    <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
@@ -256,29 +259,8 @@
             }
         }
 
-        function result(data) {
-            // $("#test").empty()
-            // $("#test").html(
-            //     `<div class="card-body">
-            //         <div class ="row text-center">
-            //             <div class = "col">
-            //                 <h2 id="index" class="card-title mb-5" style="font-family: 'Convergence', sans-serif"><i
-            //                 class="fas fa-robot pr-3"></i>Here is your soul mate!! </h2>
-            //             </div>
-            //         </div>
-            //         <div class = 'row'>
-            //             <div class="col ml-auto text-center">
-            //                 <div class = "text-center">
-            //                     <h3 class = "font-weight-bold mb-4" style="font-family: 'Roboto', sans-serif">Compatibility `+ data.compatibility +`%</h3>
-            //                     <img class = "mb-5" style="max-width: 360px;" src = '`+ data.match.photo + `'>
-            //                 </div>
-            //                 <h3 style="font-family: 'Roboto', sans-serif">Name : `+ data.match.name + `</h3>
-            //                 <h3 style="font-family: 'Roboto', sans-serif">Email: `+ data.match.email + `</h3>
-            //             </div>
-            //         </div>
-            //     </div>`
-            // )
-            console.log("RUN!!!!")
+        function result(data) { 
+            console.log("Modal RUN!!!!")
             $("#resultPhoto").attr('src', data.match.photo)
             $("#resultName").text(data.match.name)
             $("#resultEmail").text(data.match.email)
