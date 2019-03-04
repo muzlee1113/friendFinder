@@ -241,13 +241,15 @@
                 }
             // if it's the last question, end the game and post the new friend data
             } else {
-                if(!score){
-                    alert("Please Choose One!!")
-                }else{
+                
                     // push the score to the scores arr
                     let score = $("input:checked").val()
+                    if(!score){
+                    alert("Please Choose One!!")
+                }else{
+                    score = parseInt(score)
                     console.log(score)
-                    newFriend.scores.push(parseInt(score))
+                    newFriend.scores.push(score)
                     console.log(newFriend)
                     console.log("end")
                     console.log(newFriend)
