@@ -202,7 +202,7 @@
                 "photo": imgUrl,
                 "scores": []
             }
-            if(newFriend.email===""||newFriend.name===""||newFriend.photo===""){
+            if(newFriend.email===""||newFriend.name===""||!newFriend.photo){
                 alert("Please finish the form")
             }else{
                 console.log(newFriend)
